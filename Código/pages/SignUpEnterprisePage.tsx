@@ -1,6 +1,6 @@
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { useUserController } from '../controllers/RegistrationEnterpriseController';
-import { User, validationSchema } from '../models/EnterpriseModel';
+import { User, validationSchema } from '../models/BusinessModel';
 
 function RegistrationForm() {
   const {

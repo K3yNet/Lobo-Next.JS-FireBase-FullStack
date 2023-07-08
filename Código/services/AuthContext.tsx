@@ -2,6 +2,7 @@ import React, { createContext, useState, useEffect, ReactNode } from 'react';
 import { auth } from './firebaseConfig';
 
 interface User {
+	uid: any;
   // Defina os campos da interface User conforme necessário
   // Exemplo: uid, displayName, email, photoURL, etc.
 }

@@ -4,20 +4,22 @@ import { getAuth, onAuthStateChanged, updateEmail } from 'firebase/auth';
 import { useRouter } from 'next/router';
 
 interface UserData {
-  nome: string;
+  addrs: string;
+  cnpj: string;
   email: string;
-  birth: string;
-  cidade: string;
+  nomeAdm: string;
+  nomeInst: string;
   phone: string;
   newEmail?: string;
 }
 
 function EditProfile() {
   const [userData, setUserData] = useState<UserData>({
-    nome: '',
+    addrs: '',
+    cnpj: '',
     email: '',
-    birth: '',
-    cidade: '',
+    nomeAdm: '',
+    nomeInst: '',
     phone: '',
     newEmail: ''
   });
@@ -28,7 +30,7 @@ function EditProfile() {
   useEffect(() => {
     const auth = getAuth();
     const firestore = getFirestore();
-    const usersRef = collection(firestore, 'users');
+    const usersRef = collection(firestore, 'business');
 
     // Verifique o estado de autenticação do usuário
     onAuthStateChanged(auth, async (user) => {
@@ -69,7 +71,7 @@ function EditProfile() {
         toFirestore: (data) => data,
         fromFirestore: (snapshot) => snapshot.data() as UserData,
       };
-      const userDocRef: DocumentReference<UserData> = doc(firestore, 'users', documentName).withConverter(converter);
+      const userDocRef: DocumentReference<UserData> = doc(firestore, 'business', documentName).withConverter(converter);
 
       // Atualize o email no objeto userData, se fornecido
       const updatedUserData = { ...userData };
@@ -103,13 +105,35 @@ function EditProfile() {
             <div className="box mx-auto" style={{ maxWidth: '400px' }}>
               <form onSubmit={handleSubmit}>
                 <div className="form-group">
-                  <label htmlFor="nome">Nome:</label>
+                  <label htmlFor="nome">Nome da instituição:</label>
                   <input
                     type="text"
                     className="form-control"
-                    id="nome"
-                    name="nome"
-                    value={userData.nome}
+                    id="nomeInst"
+                    name="nomeInst"
+                    value={userData.nomeInst}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="cidade">Nome do responsável:</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="nomeAdm"
+                    name="nomeAdm"
+                    value={userData.nomeAdm}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="phone">CNPJ:</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="cnpj"
+                    name="cnpj"
+                    value={userData.cnpj}
                     onChange={handleInputChange}
                   />
                 </div>
@@ -125,24 +149,13 @@ function EditProfile() {
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="birth">Data de aniversário:</label>
+                  <label htmlFor="birth">Endereço:</label>
                   <input
                     type="text"
                     className="form-control"
-                    id="birth"
-                    name="birth"
-                    value={userData.birth}
-                    onChange={handleInputChange}
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="cidade">Cidade:</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="cidade"
-                    name="cidade"
-                    value={userData.cidade}
+                    id="addrs"
+                    name="addrs"
+                    value={userData.addrs}
                     onChange={handleInputChange}
                   />
                 </div>

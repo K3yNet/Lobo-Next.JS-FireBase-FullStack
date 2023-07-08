@@ -25,13 +25,6 @@
    1. O software DEVE enviar o usuário para a respectiva tela de ver pets
 2. O software DEVE exibir todos os pets disponiveis para adoção
 
-### RF004 - Realizar adoção
-
-**Prioridade**: Essencial.
-
-1. O software DEVE possuir um campo de Realizar Adoção
-   1. O software DEVE enviar o usuário para a respectiva tela da adoção
-2. O software DEVE validar os dados preenchidos pelo usuário
 
 # Instituição / Administrador
 
@@ -95,19 +88,3 @@
 1. O software DEVE permitir que o adiministrador delete uma adoção
    1. O software DEVE restringir o adiministrador de deletar as adoções apenas de sua instituição responsável
 
-# Serviço
-
-### RF001 - Realizar uma doação
-
-**Prioridade**: Desejável.
-
-1. O software DEVE permitir ao usuário a realizar uma doação ao site
-1. O software DEVE permitir ao usuário a realizar uma doação a uma instituição de preferencia
-
-### RF002 - Avaliar serviço
-
-**Prioridade**: Desejável.
-
-1. O software DEVE permitir ao usuário a avaliar uma instituição
-   1. O software DEVE garantir que a adoção foi realizada
-2. O software DEVE computar a avaliação da instituição

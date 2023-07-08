@@ -3,7 +3,7 @@ import router from 'next/router';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { app } from '../services/firebaseConfig';
 import { addDoc, collection, getDocs, getFirestore, query, where } from 'firebase/firestore';
-import { User, validationSchema } from '../models/EnterpriseModel';
+import { User, validationSchema } from '../models/BusinessModel';
 
 export function useUserController() {
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
