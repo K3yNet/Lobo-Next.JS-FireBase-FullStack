@@ -1,6 +1,18 @@
 import { useEffect, useState } from 'react';
-import { getFirestore, collection, doc, updateDoc, where, DocumentSnapshot, getDocs, query, DocumentReference, FirestoreDataConverter } from 'firebase/firestore';
-import { getAuth, onAuthStateChanged, updateEmail } from 'firebase/auth';
+import {
+  getFirestore,
+  collection,
+  doc,
+  updateDoc,
+  where,
+  DocumentSnapshot,
+  getDocs,
+  query,
+  DocumentReference,
+  FirestoreDataConverter,
+  deleteDoc
+} from 'firebase/firestore';
+import { getAuth, onAuthStateChanged, updateEmail, deleteUser, User } from 'firebase/auth';
 import { useRouter } from 'next/router';
 
 interface UserData {
@@ -56,6 +68,37 @@ function EditProfile() {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setUserData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const handleDeleteProfile = async () => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+  
+    if (user) {
+      const confirmDelete = window.confirm('Tem certeza de que deseja excluir o perfil? Esta ação é irreversível.');
+  
+      if (confirmDelete) {
+        try {
+          // Excluir perfil no Firebase Authentication
+          await deleteUser(user);
+  
+          // Excluir perfil no Firestore
+          const firestore = getFirestore();
+          const userDocRef: DocumentReference<UserData> | null = documentName
+            ? doc(firestore, 'users', documentName) as DocumentReference<UserData>
+            : null;
+  
+          if (userDocRef) {
+            await deleteDoc(userDocRef);
+          }
+  
+          router.push('/'); // Redirecionar para a página inicial ou para onde preferir
+  
+        } catch (error) {
+          console.log('Erro ao excluir o perfil:', error);
+        }
+      }
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -159,6 +202,13 @@ function EditProfile() {
                 </div>
                 <button type="submit" className="btn btn-primary">Salvar</button>
               </form>
+
+              <div className="mt-4 text-center">
+                <button className="btn btn-danger" onClick={handleDeleteProfile}>
+                  Excluir Perfil
+                </button>
+              </div>
+
             </div>
           </div>
         </div>
@@ -168,3 +218,7 @@ function EditProfile() {
 }
 
 export default EditProfile;
+
+function reauthenticate(user: User) {
+  throw new Error('Function not implemented.');
+}

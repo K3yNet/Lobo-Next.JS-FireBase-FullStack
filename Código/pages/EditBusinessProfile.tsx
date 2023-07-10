@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { getFirestore, collection, doc, updateDoc, where, DocumentSnapshot, getDocs, query, DocumentReference, FirestoreDataConverter } from 'firebase/firestore';
-import { getAuth, onAuthStateChanged, updateEmail } from 'firebase/auth';
+import { getFirestore, collection, doc, updateDoc, where, DocumentSnapshot, getDocs, query, DocumentReference, FirestoreDataConverter, deleteDoc } from 'firebase/firestore';
+import { getAuth, onAuthStateChanged, updateEmail, deleteUser } from 'firebase/auth';
 import { useRouter } from 'next/router';
 
 interface UserData {
@@ -92,6 +92,32 @@ function EditProfile() {
     }
   };
 
+  const handleDeleteProfile = async () => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    if (user && documentName) {
+      const confirmDelete = window.confirm('Tem certeza de que deseja excluir o perfil? Esta ação é irreversível.');
+
+      if (confirmDelete) {
+        try {
+          // Excluir perfil no Firebase Authentication
+          await deleteUser(user);
+
+          // Excluir perfil no Firestore
+          const firestore = getFirestore();
+          const userDocRef: DocumentReference<UserData> = doc(firestore, 'business', documentName);
+          await deleteDoc(userDocRef);
+
+          router.push('/'); // Redirecionar para a página inicial ou para onde preferir
+
+        } catch (error) {
+          console.log('Erro ao excluir o perfil:', error);
+        }
+      }
+    }
+  };
+
   return (
     <div className="modal modal-sheet position-static d-block bg-body-secondary p-4 py-md-5" tabIndex={-1} role="dialog" id="modalSignin">
       <div className="modal-dialog" role="document">
@@ -105,7 +131,7 @@ function EditProfile() {
             <div className="box mx-auto" style={{ maxWidth: '400px' }}>
               <form onSubmit={handleSubmit}>
                 <div className="form-group">
-                  <label htmlFor="nome">Nome da instituição:</label>
+                  <label htmlFor="nomeInst">Nome da instituição:</label>
                   <input
                     type="text"
                     className="form-control"
@@ -116,7 +142,7 @@ function EditProfile() {
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="cidade">Nome do responsável:</label>
+                  <label htmlFor="nomeAdm">Nome do responsável:</label>
                   <input
                     type="text"
                     className="form-control"
@@ -127,7 +153,7 @@ function EditProfile() {
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="phone">CNPJ:</label>
+                  <label htmlFor="cnpj">CNPJ:</label>
                   <input
                     type="text"
                     className="form-control"
@@ -138,7 +164,7 @@ function EditProfile() {
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="email">Novo Email:</label>
+                  <label htmlFor="newEmail">Novo Email:</label>
                   <input
                     type="email"
                     className="form-control"
@@ -149,7 +175,7 @@ function EditProfile() {
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="birth">Endereço:</label>
+                  <label htmlFor="addrs">Endereço:</label>
                   <input
                     type="text"
                     className="form-control"
@@ -172,6 +198,11 @@ function EditProfile() {
                 </div>
                 <button type="submit" className="btn btn-primary">Salvar</button>
               </form>
+            </div>
+            <div className="mt-4 text-center">
+              <button type="button" className="btn btn-danger" onClick={handleDeleteProfile}>
+                Excluir Perfil
+              </button>
             </div>
           </div>
         </div>

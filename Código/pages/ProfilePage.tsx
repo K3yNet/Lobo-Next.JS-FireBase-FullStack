@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { UserData as User } from '../models/UserProfile';
 import { UserData as Business } from '../models/BusinessProfile';
 import { useProfileController as useUserController } from '../controllers/ProfileController';
-import { useProfileController as useBusinessController } from '../controllers/BusinessController';
+import { useProfileController as useBusinessController } from '../controllers/ProfileBusinessController';
 
 function ProfilePage() {
   const { isLoggedIn, userData: user } = useUserController();
@@ -34,7 +34,7 @@ function ProfilePage() {
                     <h6 className="m-b-20 p-b-5 b-b-default f-w-600">Contato</h6>
                     <div className="row mb-5">
                       <div className="col-sm-6">
-                        <p className="f-w-600">Email para contato</p>
+                        <p className="f-w-600">Email para contato / Login</p>
                         <p className="card-text text-muted f-w-400">{user.email}</p>
                       </div>
                       <div className="col-sm-6">
@@ -48,7 +48,14 @@ function ProfilePage() {
                         <p className="m-b-10 f-w-600">Cidade</p>
                         <p className="card-text text-muted f-w-400">{user.cidade}</p>
                       </div>
-                      {/* Adicione outras informações do perfil aqui */}
+                      <div className="col-sm-6 mb-5">
+                        <p className="m-b-10 f-w-600">Data de nascimento</p>
+                        <p className="card-text text-muted f-w-400">{user.birth}</p>
+                      </div>
+                      <div className="col-sm-6 mb-5">
+                        <p className="m-b-10 f-w-600">CPF</p>
+                        <p className="card-text text-muted f-w-400">{user.cpf}</p>
+                      </div>
                     </div>
                     <div className='m-4'>
                       <div className="d-flex justify-content-center align-items-center">

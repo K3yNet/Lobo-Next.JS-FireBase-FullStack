@@ -1,5 +1,5 @@
 import { Formik, Field, Form, ErrorMessage } from 'formik';
-import { useUserController } from '../controllers/RegistrationEnterpriseController';
+import { useUserController } from '../controllers/RegistrationBusinessController';
 import { User, validationSchema } from '../models/BusinessModel';
 
 function RegistrationForm() {
