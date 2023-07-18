@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { getFirestore, collection, addDoc } from 'firebase/firestore';
+import React, { useState, useEffect } from 'react';
+import { getFirestore, collection, addDoc, doc, getDoc, query, where, getDocs } from 'firebase/firestore';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { getAuth } from 'firebase/auth';
@@ -8,13 +8,14 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 const RegisterPet = () => {
   const [user] = useAuthState(getAuth());
   const [successMessage, setSuccessMessage] = useState('');
+  const [businessName, setBusinessName] = useState('');
 
   const validationSchema = Yup.object({
     nomePet: Yup.string().required('O nome do pet é obrigatório'),
     especiePet: Yup.string().required('A espécie do pet é obrigatória'),
     racePet: Yup.string().required('A raça do pet é obrigatória'),
-    idadePet: Yup.number().required('Apenas numeros são permitidos'),
-    pesoPet: Yup.number().required('Apenas numeros são permitidos'),
+    idadePet: Yup.number().required('Apenas números são permitidos'),
+    pesoPet: Yup.number().required('Apenas números são permitidos'),
   });
 
   const formik = useFormik({
@@ -31,15 +32,27 @@ const RegisterPet = () => {
         const firestore = getFirestore();
         const petsRef = collection(firestore, 'pets');
 
-        const petData = {
-          ...values,
-          userId: user.uid,
-        };
+        const businessQuery = query(collection(firestore, 'business'), where('uid', '==', user.uid));
+        const businessSnapshot = await getDocs(businessQuery);
 
-        await addDoc(petsRef, petData);
+        if (!businessSnapshot.empty) {
+          const businessDoc = businessSnapshot.docs[0];
+          const businessData = businessDoc.data();
+          setBusinessName(businessData.nome);
 
-        formik.resetForm();
-        setSuccessMessage('Pet registrado com sucesso!');
+          const petData = {
+            ...values,
+            userId: user.uid,
+            businessName: businessData.nomeInst,
+          };
+
+          await addDoc(petsRef, petData);
+
+          formik.resetForm();
+          setSuccessMessage('Pet registrado com sucesso!');
+        } else {
+          console.error('Instituição não encontrada.');
+        }
       } catch (error) {
         console.error('Erro ao registrar o pet:', error);
       }
