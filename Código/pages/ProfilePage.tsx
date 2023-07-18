@@ -184,6 +184,14 @@ function ProfilePage() {
                             </span>
                           </button>
                         </a>
+                        <a href="/Adopt" className="align-items-center justify-content-center">
+                          <button type="button" className="btn btn-outline-dark btn btn-primary">
+                            Gerenciar Adoções
+                            <span>
+                              +
+                            </span>
+                          </button>
+                        </a>
                       </div>
                     </div>
                   </div>
