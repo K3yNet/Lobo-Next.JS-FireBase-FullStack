@@ -153,17 +153,6 @@ function EditProfile() {
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="cnpj">CNPJ:</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="cnpj"
-                    name="cnpj"
-                    value={userData.cnpj}
-                    onChange={handleInputChange}
-                  />
-                </div>
-                <div className="form-group">
                   <label htmlFor="newEmail">Novo Email:</label>
                   <input
                     type="email"
