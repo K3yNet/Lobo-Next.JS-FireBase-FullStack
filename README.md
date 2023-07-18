@@ -4,9 +4,10 @@ Lobo, é um site que visa conectar pets e seus donos de forma facil e rapida. O 
 
 ## Tecnologia Utilizadas
 
-* **Banco de Dados:** Google Firestore Database
-* **Linguagem BackEnd:** Google Firebase
-* **Linguagem FrontEnd:** HTML5 / Typescript / Bootstrap - v5.3
+* **Banco de Dados:** Google Firestore Database - v9.22.2
+* **Linguagem BackEnd:** Google Firebase - v9.22.2 / Node - v20.2.5 / Eslint - 7.23.0 / React Firebase Hooks - v5.1.1 / Typescript - v5.0.4
+* **Linguagem FrontEnd:** HTML5 / Bootstrap - v5.3 / Formik - v2.4.1 / Yup - v1.2.0 / Typescript - v5.0.4
+* **Framework** Next.JS - v13.4.4 / React - v18.2.0
 
 ## Principais Funcionalidades
 
