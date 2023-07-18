@@ -72,12 +72,12 @@ function Navbar() {
 							</a>
 						</li>
 						<li>
-							<a href="#" className="nav-link px-2 text-dark">
+							<a href="/PetList" className="nav-link px-2 text-dark">
 								Ver pets
 							</a>
 						</li>
 						<li>
-							<a href="#" className="nav-link px-2 text-dark">
+							<a href="/BusinessList" className="nav-link px-2 text-dark">
 								Ver Instituições
 							</a>
 						</li>
