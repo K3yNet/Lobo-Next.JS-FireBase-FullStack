@@ -65,9 +65,9 @@ const SignUpAdopt = () => {
       console.log('Adoção registrada com sucesso!');
 
       // Excluir o pet do banco de dados
-      const petDocRef = doc(firestore, 'pets', selectedPet.id);
-      await deleteDoc(petDocRef);
-      console.log('Pet excluído com sucesso!');
+      //const petDocRef = doc(firestore, 'pets', selectedPet.id);
+      //await deleteDoc(petDocRef);
+      //console.log('Pet excluído com sucesso!');
 
       // Limpar os dados do usuário e pet selecionado após o registro da adoção
       setUserData(null);
